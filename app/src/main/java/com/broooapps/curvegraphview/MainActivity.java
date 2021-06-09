@@ -38,39 +38,51 @@ public class MainActivity extends AppCompatActivity {
 
 
         PointMap pointMap = new PointMap();
+/*
         pointMap.addPoint(1, 200);
         pointMap.addPoint(3, 400);
         pointMap.addPoint(4, 100);
         pointMap.addPoint(5, 600);
+*/
+
+        //строим прямую*****************************************************************************
+        for(int i=0;i<100;i++) pointMap.addPoint(i,i*5);
 
         final GraphData gd = GraphData.builder(this)
                 .setPointMap(pointMap)
                 .setGraphStroke(R.color.Black)
                 .setGraphGradient(R.color.gradientStartColor2, R.color.gradientEndColor2)
+                .setStraightLine(true)
                 .animateLine(true)
                 .setPointColor(R.color.Red)
-                .setPointRadius(5)
+                .setPointRadius(1)
                 .build();
 
         PointMap p2 = new PointMap();
+/*
         p2.addPoint(0, 440);
         p2.addPoint(1, 0);
         p2.addPoint(2, 100);
         p2.addPoint(3, 0);
         p2.addPoint(4, 400);
         p2.addPoint(5, 200);
+*/
+
+        //строим синус******************************************************************************
+        for(int i=0;i<100;i++) p2.addPoint(i,(int)(500*Math.sin(Math.PI*i/100.)) );
 
         final GraphData gd2 = GraphData.builder(this)
                 .setPointMap(p2)
                 .setGraphStroke(R.color.Green)
                 .setGraphGradient(R.color.gradientStartColor, R.color.gradientEndColor)
+                .setStraightLine(false)
                 .animateLine(true)
                 .build();
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                curveGraphView.setData(5, 600, gd, gd2);
+                curveGraphView.setData(100, 600, gd, gd2);
             }
         }, 250);
     }
