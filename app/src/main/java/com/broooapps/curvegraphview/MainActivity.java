@@ -2,8 +2,11 @@ package com.broooapps.curvegraphview;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.TextView;
 
 import com.broooapps.graphview.CurveGraphConfig;
 import com.broooapps.graphview.CurveGraphView;
@@ -12,14 +15,46 @@ import com.broooapps.graphview.models.PointMap;
 
 public class MainActivity extends AppCompatActivity {
 
+    public void onClick(View view) {
+        Intent intent = new Intent(this, MainActivity2.class);
+        startActivity(intent);
+    }
 
     CurveGraphView curveGraphView2;
     CurveGraphView curveGraphView;
+    String l,r,n,a;
+    int Left,Right,N,A[]=new int[100];
 
+    public double f(double x){//вычисление значения полинома
+        double y=A[N-1],xN=x;
+        for(int i=N-2;i>=0;i--) {
+            y += A[i] * xN;
+            xN*=x;
+        }
+        return y;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //получение данных из MainActivity2
+        Bundle arguments = getIntent().getExtras();
+        l= arguments.getString("L");
+        r= arguments.getString("R");
+        n= arguments.getString("N");
+        a= arguments.getString("A");
+        TextView tv4=(TextView) findViewById(R.id.textView4);
+        tv4.setText(l+r+n+a);//отладочный вывод - проверка правиьлности передачи
+        Left=Integer.parseInt(l);
+        Right=Integer.parseInt(r);
+        N=Integer.parseInt(n);
+//получение коэффициентов полинома
+        String strArr[] = a.split(" ");
+        for (int i = 0; i < strArr.length; i++) {
+            A[i] = Integer.parseInt(strArr[i]);
+        }
+        //*********************************
 
         curveGraphView = findViewById(R.id.cgv);
 
