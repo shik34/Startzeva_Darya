@@ -22,15 +22,16 @@ public class MainActivity extends AppCompatActivity {
 
     CurveGraphView curveGraphView2;
     CurveGraphView curveGraphView;
-    String l,r,n,a;
-    int Left,Right,N,A[]=new int[100];
+    String l,r, n1, a1, n2, a2;
+    int left, right, N1, N2, A1[]=new int[100],A2[]=new int[100];
 
-    public double f(double x){//вычисление значения полинома
+    public double f(double x,int N, int [] A){//вычисление значения полинома
         double y=A[N-1],xN=x;
         for(int i=N-2;i>=0;i--) {
             y += A[i] * xN;
             xN*=x;
         }
+//        y=2*x;
         return y;
     }
     @Override
@@ -42,17 +43,40 @@ public class MainActivity extends AppCompatActivity {
         Bundle arguments = getIntent().getExtras();
         l= arguments.getString("L");
         r= arguments.getString("R");
-        n= arguments.getString("N");
-        a= arguments.getString("A");
+        n1 = arguments.getString("N1");
+        a1 = arguments.getString("A1");
+        n2 = arguments.getString("N2");
+        a2 = arguments.getString("A2");
+/*
+        if(l=="") l="1";
+        if(r=="") r="2";
+        if(n=="") n="1";
+        if(a=="") a="1 1";
+*/
+/*
+        l="0";
+        r="1";
+        n1="3";
+        a1="4 0 0";
+        n2="3";
+        a2="6 0 0";
+*/
+
         TextView tv4=(TextView) findViewById(R.id.textView4);
-        tv4.setText(l+r+n+a);//отладочный вывод - проверка правиьлности передачи
-        Left=Integer.parseInt(l);
-        Right=Integer.parseInt(r);
-        N=Integer.parseInt(n);
+        tv4.setText(l+r+ n1 + a1);//отладочный вывод - проверка правиьлности передачи
+        left =Integer.parseInt(l);
+        right =Integer.parseInt(r);
+        N1 =Integer.parseInt(n1)+1;
+        N2 =Integer.parseInt(n2)+1;
 //получение коэффициентов полинома
-        String strArr[] = a.split(" ");
+        String [] strArr;
+        strArr = a1.split(" ");
         for (int i = 0; i < strArr.length; i++) {
-            A[i] = Integer.parseInt(strArr[i]);
+            A1[i] = Integer.parseInt(strArr[i]);
+        }
+        strArr = a2.split(" ");
+        for (int i = 0; i < strArr.length; i++) {
+            A2[i] = Integer.parseInt(strArr[i]);
         }
         //*********************************
 
@@ -83,16 +107,9 @@ public class MainActivity extends AppCompatActivity {
         //строим прямую*****************************************************************************
         for(int i=0;i<100;i++) pointMap.addPoint(i,i*5);
 
-        final GraphData gd = GraphData.builder(this)
-                .setPointMap(pointMap)
-                .setGraphStroke(R.color.Black)
-                .setGraphGradient(R.color.gradientStartColor2, R.color.gradientEndColor2)
-                .setStraightLine(true)
-                .animateLine(true)
-                .setPointColor(R.color.Red)
-                .setPointRadius(1)
-                .build();
 
+
+        PointMap p1 = new PointMap();
         PointMap p2 = new PointMap();
 /*
         p2.addPoint(0, 440);
@@ -104,12 +121,36 @@ public class MainActivity extends AppCompatActivity {
 */
 
         //строим синус******************************************************************************
-        for(int i=0;i<100;i++) p2.addPoint(i,(int)(500*Math.sin(Math.PI*i/100.)) );
+        double x=left,y,h=(right-left)/100.0;
+        Double yy;
+        for(int i=0;i<100;i++) {
 
+//            p2.addPoint(i,(int)(500*Math.sin(Math.PI*i/100.)) );
+            //y=200 * x;
+            y=200*f(x,N1,A1);
+            p1.addPoint(i, (int)(y));
+            y=200*f(x,N2,A2);
+            p2.addPoint(i, (int)(y));
+            //x+=(int)(500*Math.sin(Math.PI*i/100.));
+           x+=h;
+            yy=y;
+            String s="y="+yy.toString();
+            tv4.setText(s);
+//            p2.addPoint(i,i*4);
+        }
+        final GraphData gd = GraphData.builder(this)
+                .setPointMap(p1)
+                .setGraphStroke(R.color.Black)
+                //   .setGraphGradient(R.color.gradientStartColor2, R.color.gradientEndColor2)
+                .setStraightLine(true)
+                .animateLine(true)
+                .setPointColor(R.color.Red)
+                .setPointRadius(1)
+                .build();
         final GraphData gd2 = GraphData.builder(this)
                 .setPointMap(p2)
                 .setGraphStroke(R.color.Green)
-                .setGraphGradient(R.color.gradientStartColor, R.color.gradientEndColor)
+//                .setGraphGradient(R.color.gradientStartColor, R.color.gradientEndColor)
                 .setStraightLine(false)
                 .animateLine(true)
                 .build();

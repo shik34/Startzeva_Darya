@@ -31,6 +31,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:text=""
         android:inputType="textPersonName"
         />
 
@@ -38,43 +39,66 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:text="правая граница:" />
-
     <EditText
         android:id="@+id/textR"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:text=""
         android:inputType="textPersonName"
         />
+
 
     <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="Введите степень полинома:" />
-
+        android:text="Введите степень полинома №1:" />
     <EditText
-        android:id="@+id/textN"
+        android:id="@+id/textN1"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:text=""
         android:inputType="textPersonName"/>
-
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:text="Введите целые числа - коэффициенты полинома:" />
-
+        android:text="Введите целые числа - коэффициенты полинома №1:" />
     <EditText
-        android:id="@+id/textA"
+        android:id="@+id/textA1"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:text=""
+        android:inputType="textPersonName"/>
+
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Введите степень полинома №2:" />
+    <EditText
+        android:id="@+id/textN2"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text=""
+        android:inputType="textPersonName"/>
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Введите целые числа - коэффициенты полинома №2:" />
+    <EditText
+        android:id="@+id/textA2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:text=""
         android:inputType="textPersonName"/>
 
     <Button
@@ -82,6 +106,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="onClick"
-        android:text="Вычисляем" />
+        android:text="Строим графики" />
 
 </LinearLayout>
